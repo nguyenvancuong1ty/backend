@@ -1,6 +1,6 @@
+const connection = require('../config/connect')
 const Home = (req, res) => {
-    //Model
-    res.send('Hello World with Express say hi');
+        res.render('home.ejs');
 }
 
 const View = (req,res) => {
@@ -8,4 +8,14 @@ const View = (req,res) => {
     res.render('index.ejs');
 }
 
-module.exports = {Home, View}
+const AddUser =  (req, res) => {
+    const {email, name, city} = req.body;
+    const sql = 'INSERT INTO Users(email, name, city) values(?,?,?)';
+    connection.query(sql,[email, name, city], (error, result) => {
+            console.log(result);
+            res.send('finish')
+        }
+    );  
+}
+
+module.exports = {Home, View, AddUser}

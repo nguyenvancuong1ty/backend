@@ -9,6 +9,8 @@ const routers = require('./router')
 const app = express();
 const port = process.env.PORT;
 
+app.use(express.json()) // config req.body
+app.use(express.urlencoded({extended: true}))
 //use
 configViewEngine(app);
 app.use(routers);
