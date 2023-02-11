@@ -11,27 +11,29 @@
 <body>
     <header>
         <ul>
-            <li><a class="active" href="#home">Home</a></li>
-            <li><a href="/view">News</a></li>
+            <li><a class="active" href="/">Home</a></li>
+            <li><a href="/create_user">Create User</a></li>
             <li><a href="#contact">Contact</a></li>
             <li><a href="#about">About</a></li>
         </ul>
-    </header>
-    <div class="content">
-        <form action="/create-user" method="post" style="width: 50%; margin: 64px auto">
-            <fieldset>
-             <legend>Create User:</legend>
-             <div class="form_wrap">
-                 <label for="name">Name</label>
-                 <input type="text" id="name" name="name"><br><br>
-                 <label for="email">Email:</label>
-                 <input type="email" id="email" name="email"><br><br>
-                 <label for="city">City</label>
-                 <input type="text" id="city" name="city"><br><br>
-             </div>
-             <input type="submit" value="Submit" class="submit-form">
-            </fieldset>
-           </form>
-    </div>
-</body>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>City</th>
+                <th>Delete</th>
+                <th>Edit</th>
+            </tr>
+            <% data.forEach((item,index) => { %>
+                <tr>
+                    <td><%= item.id %></td>
+                    <td><%= item.name %></td>
+                    <td><%= item.email %></td>
+                    <td><%= item.city %></td>
+                    <td><a class = "delete" href="/delete-user/<%= item.id%>" class="delete" id="<%= item.id%>">X</a></td>
+                    <td><a class="btn-update" href="/update-user/<%= item.id%>">update</a></td>
+                </tr>
+                <% }); %>
+            </table>
 </html>

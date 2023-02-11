@@ -1,6 +1,10 @@
-const connection = require('../config/connect')
-const Home = (req, res) => {
-        res.render('home.ejs');
+const connection = require('../config/connect');
+
+const { getUsers, createUser, deleteUser, getUserById, updateUser } = require('../services/CRUDdata');
+
+const Home = async(req, res) => {
+        result =  await getUsers();
+        res.render('home.ejs', {data : result});
 }
 
 const View = (req,res) => {
@@ -8,14 +12,31 @@ const View = (req,res) => {
     res.render('index.ejs');
 }
 
-const AddUser =  (req, res) => {
-    const {email, name, city} = req.body;
-    const sql = 'INSERT INTO Users(email, name, city) values(?,?,?)';
-    connection.query(sql,[email, name, city], (error, result) => {
-            console.log(result);
-            res.send('finish')
-        }
-    );  
+const AddUserPage = (req,res) => {
+    //Model
+    res.render('create.ejs');
+    // res.redirect('/');
 }
 
-module.exports = {Home, View, AddUser}
+const AddUser =  async (req, res) => {   
+    await createUser(req);
+    res.redirect('/');
+    
+}
+
+const DeleteUser = async(req,res) => {
+    await deleteUser(req);
+    res.redirect('/');
+}
+
+const getUpdatePage = async(req,res) => {
+    const data = await getUserById(req);
+    res.render('update.ejs', {data: data});
+}
+
+const UpdateUser = async(req,res) => {
+    await updateUser(req);
+    res.redirect('/')
+}
+
+module.exports = {Home, View, AddUser, AddUserPage, DeleteUser, UpdateUser, getUpdatePage}
