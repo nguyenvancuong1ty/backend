@@ -1,21 +1,33 @@
 // import express from 'express';
-const express = require('express')
-//import config view engine
+
+const express = require('express');
+//import scss
 const configViewEngine = require('./config/configViewEngine');
-//import .env get 
+//import .env get
 require('dotenv').config();
-const routers = require('./router')
+const webRouter = require('./router/webRouter');
+const apiRouter = require('./router/apiRouter');
 
 const app = express();
 const port = process.env.PORT;
 
-app.use(express.json()) // config req.body
-app.use(express.urlencoded({extended: true}))
+app.use(express.json()); // config req.body
+app.use(express.urlencoded({ extended: true }));
+
 //use
 configViewEngine(app);
-app.use(routers);
+app.use('/', webRouter);
+app.use('/v1/api', apiRouter);
+
 //use
 
-app.listen(port, () => {
-     console.log('listening nodejs with port', port);
+app.use((req,res,next)=>{
+    res.setHeader('Access-Control-Allow-Origin','*');
+    res.setHeader('Access-Control-Allow-Methods','GET,POST,PUT,PATCH,DELETE');
+    res.setHeader('Access-Control-Allow-Methods','Content-Type','Authorization');
+    next(); 
 })
+
+app.listen(port, () => {
+    console.log('listening nodejs with port', port);
+});
