@@ -132,6 +132,26 @@ const apiGetRecipe = async (req, res) => {
     });
 };
 
+const apiGetCart = async (req, res) => {
+    const id = req.params.userId;
+    const sql = 'SELECT *, SUM(cart.quantity) as total_quantity FROM cart JOIN cakedetail  ON cart.cakeId = cakedetail.id JOIN users ON cart.userId = users.id WHERE cart.userId = ? GROUP BY userId, cakeId';
+    const [result, fields] = await connection.query(sql, [id]);
+    return res.status(200).json({
+        statusCode: 200,
+        data: result,
+    });
+};
+
+const apiGetCartById = async (req, res) => {
+    const id = req.params.userId;
+    const sql = 'select * from cart where userId = ?';
+    const [result, fields] = await connection.query(sql, [id]);
+    return res.status(200).json({
+        statusCode: 200,
+        data: result,
+    });
+};
+
 module.exports = {
     apiGetUsers,
     apiCreateUser,
@@ -146,4 +166,6 @@ module.exports = {
     apiGetCakedatilA,
     apiGetNews,
     apiGetRecipe,
+    apiGetCart,
+    apiGetCartById
 };
