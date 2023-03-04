@@ -28,6 +28,6 @@ app.use((req, res, next) => {
     next();
 });
 
-app.listen(port, () => {
-    console.log('listening nodejs with port', port);
+app.listen(3000, '0.0.0.0', () => {
+    console.log(`Express server listening on port ${port}`);
 });
