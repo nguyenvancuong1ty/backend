@@ -30,11 +30,18 @@ const apiUpdateUser = async (req, res) => {
 const apiDeleteUser = async (req, res) => {
     const sql = 'delete from Users where id = ?';
     const userId = req.body.id;
-    const [result, fields] = await connection.query(sql, [userId]);
-    return res.status(200).json({
-        statusCode: 200,
-        result: result,
-    });
+    try {
+        const [result, fields] = await connection.query(sql, [userId]);
+        return res.status(200).json({
+            statusCode: 200,
+            result: result,
+        });
+    } catch (e) {
+        return res.status(400).json({
+            statusCode: 400,
+            result: e,
+        });
+    }
 };
 
 //Login
@@ -99,12 +106,19 @@ const apiUpdateCake = async (req, res) => {
 // Delete type of Cakes
 const apiDeleteCakes = async (req, res) => {
     const { id } = req.body;
-    const sql = 'delete from cakes where categoryCake = ?';
-    const [result, fields] = await connection.query(sql, [id]);
-    return res.status(200).json({
-        statusCode: 200,
-        data: result,
-    });
+    try {
+        const sql = 'delete from cakes where categoryCake = ?';
+        const [result, fields] = await connection.query(sql, [id]);
+        return res.status(200).json({
+            statusCode: 200,
+            data: result,
+        });
+    } catch (e) {
+        return res.status(400).json({
+            statusCode: 400,
+            data: e,
+        });
+    }
 };
 
 const apiGetNewProduct = async (req, res) => {
@@ -129,8 +143,8 @@ const apiGetVoucher = async (req, res) => {
 // Voucher Add
 const apiAddVoucher = async (req, res) => {
     const data = req.body;
-    const sql = 'insert into voucher(code, date, detail, requirement) values(?,?,?,?)';
-    await connection.query(sql, [data.code, data.date, data.detail, data.requirement]);
+    const sql = 'insert into voucher(code,detail, requirement) values(?,?,?)';
+    await connection.query(sql, [data.code, data.detail, data.requirement]);
     const [result, fields] = await connection.query('select * from voucher');
     return res.status(200).json({
         statusCode: 200,
@@ -153,13 +167,20 @@ const apiDeleteVoucher = async (req, res) => {
 
 const apiUpdateVoucher = async (req, res) => {
     const data = req.body;
-    const sql = 'update voucher set code =?, date =?, detail =? requirement = ? where id = ?';
-    await connection.query(sql, [data.code, data.date, data.detail, data.requirement, data.id]);
-    const [result, fields] = await connection.query('select * from news');
-    return res.status(200).json({
-        statusCode: 200,
-        data: result,
-    });
+    const sql = 'update voucher set code =?, date =?, detail =?, requirement = ? where id = ?';
+    try {
+        await connection.query(sql, [data.code, data.date, data.detail, data.requirement, data.id]);
+        const [result, fields] = await connection.query('select * from voucher');
+        return res.status(200).json({
+            statusCode: 200,
+            data: result,
+        });
+    } catch (e) {
+        return res.status(400).json({
+            statusCode: 200,
+            data: 'error',
+        });
+    }
 };
 
 // Get cakes detail
@@ -187,21 +208,30 @@ const apiDeleteCakeDetail = async (req, res) => {
 // Add cake detail
 const apiAddCakeDetail = async (req, res) => {
     const data = req.body;
-    const sql = 'insert into news(categoryCake, nameCake, price, sold, inventory, images, sale) values(?,?,?,?,?,?,?)';
-    await connection.query(sql, [
-        data.categoryCake,
-        data.nameCake,
-        data.price,
-        data.sold,
-        data.inventory,
-        data.images,
-        data.sale,
-    ]);
-    const [result, fields] = await connection.query('select * from cakedetail');
-    return res.status(200).json({
-        statusCode: 200,
-        data: result,
-    });
+    const sql =
+        'insert into cakedetail(categoryCake, nameCake, price,detail, sold, inventory, images, sale) values(?,?,?,?,?,?,?,?)';
+    try {
+        await connection.query(sql, [
+            data.categoryCake,
+            data.nameCake,
+            data.price,
+            data.detail,
+            data.sold,
+            data.inventory,
+            data.images,
+            data.sale,
+        ]);
+        const [result, fields] = await connection.query('select * from cakedetail');
+        return res.status(200).json({
+            statusCode: 200,
+            data: result,
+        });
+    } catch (e) {
+        return res.status(400).json({
+            statusCode: 400,
+            data: false,
+        });
+    }
 };
 
 // Update cake details
@@ -209,11 +239,12 @@ const apiAddCakeDetail = async (req, res) => {
 const apiUpdateCakeDetail = async (req, res) => {
     const data = req.body;
     const sql =
-        'update cakedetail set categoryCake =?, nameCake =?, price =?, sold =?, inventory =?, images =?, sale =? where id = ?';
+        'update cakedetail set categoryCake =?, nameCake =?, price =?,detail = ?, sold =?, inventory =?, images =?, sale =? where id = ?';
     await connection.query(sql, [
         data.categoryCake,
         data.nameCake,
         data.price,
+        data.detail,
         data.sold,
         data.inventory,
         data.images,
