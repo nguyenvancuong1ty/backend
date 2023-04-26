@@ -1,5 +1,5 @@
 // import express from 'express';
-
+let cors = require('cors');
 const express = require('express');
 //import scss
 const configViewEngine = require('./config/configViewEngine');
@@ -11,6 +11,7 @@ const apiRouter = require('./router/apiRouter');
 const app = express();
 const port = process.env.PORT;
 
+app.use(cors());
 app.use(express.json()); // config req.body
 app.use(express.urlencoded({ extended: true }));
 
@@ -28,6 +29,6 @@ app.use((req, res, next) => {
     next();
 });
 
-app.listen(3000, '0.0.0.0', () => {
+app.listen(3002, '0.0.0.0', () => {
     console.log(`Express server listening on port ${port}`);
 });

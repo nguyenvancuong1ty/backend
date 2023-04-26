@@ -34,6 +34,7 @@ const {
     apiAddCart,
     apiDeleteCakes,
     apiDeleteCakeDetail,
+    apiSearch,
 } = require('../controllers/apiController');
 // user
 router.get('/users', apiGetUsers);
@@ -89,5 +90,8 @@ router.delete('/cake_by_cart', apiDeleteCart);
 router.post('/cake_by_cart', apiAddCart);
 
 router.get('/cart/:userId', apiGetCartById);
+
+//Search
+router.post('/search', apiSearch);
 
 module.exports = router;

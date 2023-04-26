@@ -416,6 +416,31 @@ const apiAddCart = async (req, res) => {
     });
 };
 // End Cart
+
+// Serch
+const apiSearch = async (req, res) => {
+    const { name } = req.body;
+    const sql = `select * from cakedetail where nameCake LIKE '%${name}%'`;
+    try {
+        if (name.trim().length > 0) {
+            const [result, fields] = await connection.query(sql, [name]);
+            return res.status(200).json({
+                statusCode: 200,
+                data: result,
+            });
+        } else {
+            return res.status(200).json({
+                statusCode: 200,
+                data: null,
+            });
+        }
+    } catch (error) {
+        return res.status(400).json({
+            statusCode: 400,
+            data: error,
+        });
+    }
+};
 module.exports = {
     apiGetUsers,
     apiCreateUser,
@@ -450,4 +475,5 @@ module.exports = {
     apiDeleteCart,
     apiAddCart,
     apiDeleteCakeDetail,
+    apiSearch,
 };
