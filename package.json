@@ -5,9 +5,9 @@
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "nodemon ./src",
+        "run_product": "nodemon ./src",
         "build": "babel src -d build --copy-files",
-        "run_product": "node build/index.js"
+        "start": "nodemon build/index.js"
     },
     "repository": {
         "type": "git",
