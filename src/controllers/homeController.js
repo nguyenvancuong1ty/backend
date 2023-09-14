@@ -1,7 +1,7 @@
 const { getUsers, createUser, deleteUser, getUserById, updateUser } = require('../services/CRUDdata');
 
 const Home = async (req, res) => {
-    result = await getUsers();
+    const result = await getUsers();
     res.render('home.ejs', { data: result });
 };
 
