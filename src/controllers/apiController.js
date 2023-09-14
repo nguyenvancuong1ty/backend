@@ -1,5 +1,4 @@
 const connection = require('../config/connect');
-
 const apiGetUsers = async (req, res) => {
     const sql = 'select * from Users';
     const [result, fields] = await connection.query(sql);

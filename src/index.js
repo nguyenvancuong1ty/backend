@@ -29,6 +29,6 @@ app.use((req, res, next) => {
     next();
 });
 
-app.listen(3002, '0.0.0.0', () => {
+app.listen(port, '0.0.0.0', () => {
     console.log(`Express server listening on port ${port}`);
 });
