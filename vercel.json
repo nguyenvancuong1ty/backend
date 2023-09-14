@@ -1,8 +1,19 @@
 {
+    "version": 2,
     "builds": [
         {
-            "src": "src/index.js",
+            "src": "src/dist/index.js",
             "use": "@vercel/node"
+        }
+    ],
+    "routes": [
+        {
+            "src": "/(.*)",
+            "dest": "src/dist/index.js",
+            "methods": ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+            "headers": {
+                "Access-Control-Allow-Origin": "https://nguyenvancuong1ty.github.io/FE_clone_Egacake/"
+            }
         }
     ]
 }
