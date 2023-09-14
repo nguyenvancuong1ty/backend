@@ -1,6 +1,6 @@
 const connection = require('../config/connect');
 const apiGetUsers = async (req, res) => {
-    const sql = 'select * from Users';
+    const sql = 'select * from users';
     const [result, fields] = await connection.query(sql);
     return res.status(200).json({
         statusCode: 200,
@@ -10,7 +10,7 @@ const apiGetUsers = async (req, res) => {
 
 const apiCreateUser = async (req, res) => {
     const { email, username, password } = req.body;
-    const sql = `INSERT INTO Users(email, userName,authorization, password) values(?,?,?,?)`;
+    const sql = `INSERT INTO users(email, userName,authorization, password) values(?,?,?,?)`;
     let [result, fields] = await connection.query(sql, [email, username, 0, password]);
     return res.status(200).json({
         statusCode: 200,
@@ -19,7 +19,7 @@ const apiCreateUser = async (req, res) => {
 
 const apiUpdateUser = async (req, res) => {
     const { id, email, username, password } = req.body;
-    const sql = 'update Users set email = ?, userName = ?, password = ? where id = ?';
+    const sql = 'update users set email = ?, userName = ?, password = ? where id = ?';
     const [result, fields] = await connection.query(sql, [email, username, city, id]);
     return res.status(200).json({
         statusCode: 200,
@@ -27,7 +27,7 @@ const apiUpdateUser = async (req, res) => {
 };
 
 const apiDeleteUser = async (req, res) => {
-    const sql = 'delete from Users where id = ?';
+    const sql = 'delete from users where id = ?';
     const userId = req.body.id;
     try {
         const [result, fields] = await connection.query(sql, [userId]);
@@ -46,7 +46,7 @@ const apiDeleteUser = async (req, res) => {
 //Login
 const apiLogin = async (req, res) => {
     const { username, password } = req.body;
-    const sql = 'select * from Users where userName = ? and password = ?';
+    const sql = 'select * from users where userName = ? and password = ?';
     const [result, fields] = await connection.query(sql, [username, password]);
     if (result.length) {
         return res.status(200).json({
