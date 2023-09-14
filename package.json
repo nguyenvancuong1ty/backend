@@ -6,7 +6,7 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "run_product": "nodemon ./src",
-        "build": "babel src -d ./src/build --copy-files",
+        "build": "babel src -d build --copy-files",
         "start": "nodemon src/build/index.js"
     },
     "repository": {

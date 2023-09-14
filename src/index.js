@@ -2,11 +2,11 @@
 let cors = require('cors');
 const express = require('express');
 //import scss
-const configViewEngine = require('./src/config/configViewEngine');
+const configViewEngine = require('./config/configViewEngine');
 //import .env get
 require('dotenv').config();
-const webRouter = require('./src/router/webRouter');
-const apiRouter = require('./src/router/apiRouter');
+const webRouter = require('./router/webRouter');
+const apiRouter = require('./router/apiRouter');
 
 const app = express();
 const port = process.env.PORT;
